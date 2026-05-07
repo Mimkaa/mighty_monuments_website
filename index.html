@@ -25,11 +25,11 @@
     </section>
 
     <section class="card">
-      <h2>Monument Progress</h2>
+      <h2>Global Monument Progress</h2>
 
       <div class="progress-info">
         <span id="progressText">0%</span>
-        <span id="statusText">Not started</span>
+        <span id="statusText">Loading...</span>
       </div>
 
       <div class="progress-wrapper">
@@ -37,8 +37,8 @@
       </div>
 
       <p class="hint">
-        Click the button to fill the progress bar. When it reaches 100%,
-        your monument is completed.
+        This progress is synchronized globally using Firebase Realtime Database.
+        If someone clicks the button from another PC, this bar updates too.
       </p>
     </section>
 
@@ -55,11 +55,11 @@
 
       <div class="feature">
         <h3>Play Online</h3>
-        <p>Designed as a future multiplayer game with lobby support.</p>
+        <p>The global progress bar is a first test of shared online state.</p>
       </div>
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
