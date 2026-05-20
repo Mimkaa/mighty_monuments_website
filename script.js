@@ -33,12 +33,11 @@ const DOWNLOAD_GOAL = 100;
 let downloads = 0;
 
 function updateDownloadUI() {
-  downloadText.textContent = `${downloads} / ${DOWNLOAD_GOAL} downloads`;
-
   const percentage = Math.min((downloads / DOWNLOAD_GOAL) * 100, 100);
 
-  progressBar.style.width = percentage + "%";
+  downloadText.textContent = `${downloads} / ${DOWNLOAD_GOAL} downloads`;
   statusText.textContent = `${Math.round(percentage)}%`;
+  progressBar.style.width = `${percentage}%`;
 }
 
 onValue(downloadsRef, async (snapshot) => {
