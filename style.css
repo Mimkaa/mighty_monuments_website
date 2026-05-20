@@ -2,145 +2,174 @@
   box-sizing: border-box;
 }
 
+:root {
+  --gold: #ffd36d;
+  --gold-light: #ffe8a8;
+  --orange: #ff8a3d;
+  --dark: #070403;
+}
+
 body {
   margin: 0;
+  min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(135deg, #161616, #29211a);
   color: white;
+  background:
+    linear-gradient(
+      rgba(4, 2, 1, 0.42),
+      rgba(4, 2, 1, 0.62)
+    ),
+    url("resources/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .page {
   min-height: 100vh;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
 }
 
 .hero {
+  width: min(1080px, 100%);
+  min-height: 760px;
   text-align: center;
-  padding: 60px 20px;
+  padding: 70px 70px 58px;
+  border-radius: 38px;
+  background: rgba(8, 12, 14, 0.78);
+  border: 1px solid rgba(255, 211, 109, 0.18);
+  box-shadow:
+    0 35px 100px rgba(0, 0, 0, 0.62),
+    inset 0 0 70px rgba(255, 211, 109, 0.035);
+  backdrop-filter: blur(8px);
 }
 
 .badge {
   display: inline-block;
-  padding: 8px 14px;
-  margin-bottom: 20px;
+  padding: 10px 28px;
+  margin-bottom: 34px;
   border-radius: 999px;
-  background: rgba(255, 193, 77, 0.15);
-  color: #ffc14d;
-  font-size: 14px;
-  border: 1px solid rgba(255, 193, 77, 0.35);
+  background: rgba(255, 211, 109, 0.12);
+  color: var(--gold-light);
+  border: 1px solid rgba(255, 211, 109, 0.35);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 1px;
 }
 
-h1 {
-  margin: 0;
-  font-size: 56px;
-  color: #ffc14d;
+.logo {
+  display: block;
+  width: min(760px, 95%);
+  margin: 0 auto 40px;
+  filter:
+    drop-shadow(0 0 18px rgba(255, 211, 109, 0.5))
+    drop-shadow(0 20px 42px rgba(0, 0, 0, 0.8));
 }
 
 .subtitle {
-  max-width: 650px;
-  margin: 20px auto;
-  font-size: 20px;
-  line-height: 1.5;
-  color: #ddd;
+  max-width: 760px;
+  margin: 0 auto 48px;
+  color: #f3dfbf;
+  font-size: 27px;
+  line-height: 1.45;
+  font-weight: 500;
 }
 
-.buttons {
-  margin-top: 30px;
-}
-
-button {
-  padding: 14px 22px;
-  margin: 6px;
-  border: none;
-  border-radius: 10px;
-  background: #ffc14d;
-  color: #161616;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover {
-  transform: translateY(-2px);
-}
-
-button.secondary {
-  background: transparent;
-  color: white;
-  border: 1px solid #777;
-}
-
-.card {
-  max-width: 650px;
-  margin: 0 auto;
-  padding: 30px;
+.download-button {
+  display: inline-block;
+  min-width: 360px;
+  padding: 22px 46px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  color: #1b0b04;
+  background: linear-gradient(135deg, var(--gold-light), var(--orange));
+  font-size: 26px;
+  font-weight: 950;
+  text-decoration: none;
+  box-shadow:
+    0 0 34px rgba(255, 211, 109, 0.38),
+    0 22px 55px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card h2 {
-  margin-top: 0;
+.download-button:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow:
+    0 0 46px rgba(255, 211, 109, 0.62),
+    0 30px 70px rgba(0, 0, 0, 0.65);
+}
+
+.progress-card {
+  max-width: 720px;
+  margin: 58px auto 0;
+  padding: 26px;
+  border-radius: 22px;
+  background: rgba(0, 0, 0, 0.52);
+  border: 1px solid rgba(255, 211, 109, 0.22);
 }
 
 .progress-info {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
-  color: #ddd;
+  gap: 18px;
+  margin-bottom: 18px;
+  color: #f3ddb7;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+#statusText {
+  color: var(--gold);
 }
 
 .progress-wrapper {
   width: 100%;
-  height: 28px;
-  background: #111;
+  height: 24px;
   border-radius: 999px;
   overflow: hidden;
-  border: 1px solid #555;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .progress-bar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #ffc14d, #ff7a3d);
-  transition: width 0.3s ease;
-}
-
-.hint {
-  color: #bbb;
-  line-height: 1.5;
-}
-
-.features {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin-top: 40px;
-}
-
-.feature {
-  padding: 22px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.07);
-}
-
-.feature h3 {
-  color: #ffc14d;
-}
-
-.feature p {
-  color: #ccc;
-  line-height: 1.5;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #d94b2b, #ff8a3d, #ffe8a8);
+  box-shadow: 0 0 24px rgba(255, 138, 61, 0.8);
+  transition: width 0.35s ease;
 }
 
 @media (max-width: 700px) {
-  h1 {
-    font-size: 38px;
+  .page {
+    padding: 14px;
   }
 
-  .features {
-    grid-template-columns: 1fr;
+  .hero {
+    min-height: auto;
+    padding: 42px 22px;
+    border-radius: 26px;
+  }
+
+  .badge {
+    font-size: 14px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+  }
+
+  .download-button {
+    min-width: 0;
+    width: 100%;
+    font-size: 22px;
+  }
+
+  .progress-info {
+    flex-direction: column;
+    font-size: 18px;
   }
 }

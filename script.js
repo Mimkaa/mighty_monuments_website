@@ -3,8 +3,8 @@ import {
   getDatabase,
   ref,
   onValue,
-  set,
-  get
+  runTransaction,
+  set
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
@@ -21,63 +21,44 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-const progressRef = ref(database, "progress");
+const downloadsRef = ref(database, "downloads");
 
-const progressButton = document.getElementById("progressButton");
-const resetButton = document.getElementById("resetButton");
+const downloadButton = document.getElementById("downloadButton");
 const progressBar = document.getElementById("progressBar");
-const progressText = document.getElementById("progressText");
+const downloadText = document.getElementById("downloadText");
 const statusText = document.getElementById("statusText");
 
-let progress = 0;
+const DOWNLOAD_GOAL = 100;
 
-onValue(progressRef, (snapshot) => {
+let downloads = 0;
+
+function updateDownloadUI() {
+  downloadText.textContent = `${downloads} / ${DOWNLOAD_GOAL} downloads`;
+
+  const percentage = Math.min((downloads / DOWNLOAD_GOAL) * 100, 100);
+
+  progressBar.style.width = percentage + "%";
+  statusText.textContent = `${Math.round(percentage)}%`;
+}
+
+onValue(downloadsRef, async (snapshot) => {
   const value = snapshot.val();
 
   if (value === null) {
-    progress = 0;
-    set(progressRef, 0);
+    downloads = 0;
+    await set(downloadsRef, 0);
   } else {
-    progress = value;
+    downloads = value;
   }
 
-  updateProgressUI();
+  updateDownloadUI();
 });
 
-progressButton.addEventListener("click", async () => {
-  const snapshot = await get(progressRef);
+downloadButton.addEventListener("click", () => {
+  downloads++;
+  updateDownloadUI();
 
-  let currentProgress = snapshot.val();
-
-  if (currentProgress === null) {
-    currentProgress = 0;
-  }
-
-  let newProgress = currentProgress + 10;
-
-  if (newProgress > 100) {
-    newProgress = 100;
-  }
-
-  await set(progressRef, newProgress);
+  runTransaction(downloadsRef, (currentValue) => {
+    return (currentValue || 0) + 1;
+  });
 });
-
-resetButton.addEventListener("click", async () => {
-  await set(progressRef, 0);
-});
-
-function updateProgressUI() {
-  progressBar.style.width = progress + "%";
-  progressText.textContent = progress + "%";
-
-  if (progress === 0) {
-    statusText.textContent = "Not started";
-    progressButton.textContent = "Work on Monument";
-  } else if (progress < 100) {
-    statusText.textContent = "Building...";
-    progressButton.textContent = "Work on Monument";
-  } else {
-    statusText.textContent = "Monument completed!";
-    progressButton.textContent = "Completed";
-  }
-}
